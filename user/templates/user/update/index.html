@@ -1,88 +1,124 @@
 {% extends '../../layout.html' %} {% block content %}
-<form method="POST" action="./">
+<form method="POST">
   {% csrf_token %}
-  <div>
-    <input
-      value="{{person.fullName.firstName}}"
-      name="firstName"
-      placeholder="First Name"
-    />
-  </div>
-  <div>
-    <input
-      value="{{person.fullName.middleName}}"
-      name="middleName"
-      placeholder="Middle Name"
-    />
-  </div>
-  <div>
-    <input
-      value="{{person.fullName.lastName}}"
-      name="lastName"
-      placeholder="Last Name"
-    />
-  </div>
-  Account
-  <div>
-    <input
-      value="{{person.account.username}}"
-      name="username"
-      placeholder="Username"
-      readonly
-    />
-  </div>
-  Address
-  <div>
-    <input
-      type="text"
-      value="{{person.address.wards}}"
-      name="wards"
-      placeholder="Ward"
-    />
-  </div>
-  <div>
-    <input
-      type="text"
-      value="{{person.address.district}}"
-      name="district"
-      placeholder="District"
-    />
-  </div>
-  <div>
-    <input
-      type="text"
-      value="{{person.address.province}}"
-      name="province"
-      placeholder="Province"
-    />
-  </div>
+  <div class="container">
+    <div class="row d-flex justify-content-center">
+      <div class="col-5">
+        <div>
+          <label>Họ</label>
+          <input
+            required
+            class="form-control"
+            value="{{person.fullName.firstName}}"
+            name="firstName"
+            placeholder="First Name"
+          />
+        </div>
+        <div>
+          <label>Tên đệm</label>
+          <input
+            required
+            class="form-control"
+            value="{{person.fullName.middleName}}"
+            name="middleName"
+            placeholder="Middle Name"
+          />
+        </div>
+        <div>
+          <label>Tên</label>
+          <input
+            required
+            class="form-control"
+            value="{{person.fullName.lastName}}"
+            name="lastName"
+            placeholder="Last Name"
+          />
+        </div>
 
-  <div>
-    <input
-      type="date"
-      value="{{person.dob}}"
-      name="dob"
-      placeholder="Date of birth"
-    />
+        <div>
+          <label>Username</label>
+          <input
+            required
+            class="form-control"
+            value="{{person.account.username}}"
+            name="username"
+            placeholder="Username"
+          />
+        </div>
+        <div>
+          <label>Xã</label>
+          <input
+            required
+            class="form-control"
+            type="text"
+            value="{{person.address.wards}}"
+            name="wards"
+            placeholder="Ward"
+          />
+        </div>
+        <div>
+          <label>Quận/Huyện</label>
+          <input
+            required
+            class="form-control"
+            type="text"
+            value="{{person.address.district}}"
+            name="district"
+            placeholder="District"
+          />
+        </div>
+        <div>
+          <label>Tỉnh/Thành phố</label>
+          <input
+            required
+            class="form-control"
+            type="text"
+            value="{{person.address.province}}"
+            name="province"
+            placeholder="Province"
+          />
+        </div>
+
+        <div>
+          <label>Ngày sinh</label>
+          <input
+            required
+            class="form-control"
+            type="date"
+            value="{{person.dob}}"
+            name="dob"
+            placeholder="Date of birth"
+          />
+        </div>
+        <div>
+          <label>Email</label>
+          <input
+            required
+            class="form-control"
+            type="text"
+            value="{{person.email}}"
+            name="email"
+            placeholder="Email"
+          />
+        </div>
+        <div>
+          <label>Phone</label>
+          <input
+            required
+            class="form-control"
+            type="text"
+            value="{{person.phone}}"
+            name="phone"
+            length="10"
+            placeholder="Phone"
+          />
+        </div>
+        <div class="d-flex justify-content-around">
+          <button class="btn btn-primary mt-3" type="submit">Update</button>
+          <a class="btn btn-primary mt-3" href="../">Cancel</a>
+        </div>
+      </div>
+    </div>
   </div>
-  <div>
-    <input
-      type="text"
-      value="{{person.email}}"
-      name="email"
-      placeholder="Email"
-    />
-  </div>
-  <div>
-    <input
-      type="text"
-      value="{{person.phone}}"
-      name="phone"
-      length="10"
-      placeholder="Phone"
-    />
-  </div>
-  <button class="button button-primary">Update</button>
-  <a href="../">Cancel</a>
 </form>
 {% endblock %}

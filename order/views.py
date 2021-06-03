@@ -1,4 +1,4 @@
-from order.models import Order, Shipping
+from order.models import Order, OrderLine, Shipping
 from django.shortcuts import redirect, render
 from product.models import Category, Product
 from user.models import Person
@@ -50,7 +50,8 @@ def orders(request) :
     return render(request, 'page/orders.html', {"orders" : orders})
 def detailed_order(request, id) :
     order= Order.objects.get(id = id)
-    return render(request, 'page/detailed-order.html', {"order" : order}) 
+    products = OrderLine.objects.filter(order_id = order.id)
+    return render(request, 'page/detailed-order.html', {"order" : order, "products" : products}) 
 def shipping_orders(request) : 
     shipping = Shipping.objects.filter(shipStatus = "SHIPPING")
     orders = Order.objects.filter(shipping__in = shipping)

@@ -1,12 +1,21 @@
-<table>
-  <thead>
-    <tr>
-      <td>ID</td>
-      <td>Order</td>
-      <td>Created</td>
-      <td>Amount</td>
-      <td>Status</td>
-    </tr>
-  </thead>
-  <tbody></tbody>
+{% extends '../layout.html' %}
+{% block content %} 
+<table class="table table-hover">
+  <tr>
+     <th>ID</th>
+     <th>Order</th>
+     <th>Created</th>
+     <th>Amount</th>
+     <th>Status</td>
+   </tr>
+   {% for order in orders %}
+   <tr>
+     <td>{{order.id}}</td>
+     <td>#{{order.id}}</td>
+     <td>{{order.date}}</td>
+     <td>{{order.payment.amount}}</td>
+     <td>{{order.shipping.get_shipStatus_display}}</td>
+   </tr>
+   {% endfor %}
 </table>
+{% endblock %}

@@ -1,41 +1,68 @@
-<form method="POST">
-  {% csrf_token %} Full Name
-  <div>
-    <input name="firstName" placeholder="Middle Name" />
-  </div>
-  <div>
-    <input name="middleName" placeholder="Middle Name" />
-  </div>
-  <div>
-    <input name="lastName" placeholder="Last Name" />
-  </div>
-  Account
-  <div>
-    <input name="username" placeholder="Username" />
-  </div>
-  <div>
-    <input type="password" name="password" placeholder="Password" />
-  </div>
-  Address
-  <div>
-    <input type="text" name="wards" placeholder="Ward" />
-  </div>
-  <div>
-    <input type="text" name="district" placeholder="District" />
-  </div>
-  <div>
-    <input type="text" name="province" placeholder="Province" />
-  </div>
+{% load static %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'bootstrap-grid.css' %}"
+/>
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'bootstrap.css' %}"
+/>
 
-  <div>
-    <input type="date" name="dob" placeholder="Date of birth" />
+<div class="container">
+  <div class="row d-flex justify-content-center align-items-center">
+    <form class="form col-4 mr-auto ml-auto" method="POST">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="firstName">First Name : </label>
+        <input required class="form-control" name="firstName" placeholder="First Name" />
+      </div>
+      <div class="form-group">
+        <label for="middleName">Middle Name : </label>
+        <input required class="form-control" required name="middleName" placeholder="Middle Name" />
+      </div>
+      <div class="form-group">
+        <label for="lastName">Last Name : </label>
+        <input required class="form-control" required name="lastName" placeholder="Last Name" />
+      </div>
+      <div class="form-group">
+        <label for="username">Username : </label>
+        <input required class="form-control" required name="username" placeholder="Username" />
+      </div>
+      <div class="form-group">
+        <label for="password">Password : </label>
+        <input required class="form-control" required type="password" name="password" placeholder="Password" />
+      </div>
+      <div class="form-group">
+        <label for="wards">Ward : </label>
+        <input required class="form-control" required type="text" name="wards" placeholder="Ward" />
+      </div class="form-group">
+      <div class="form-group">
+        <label for="district">District : </label>
+        <input required class="form-control" required type="text" name="district" placeholder="District" />
+      </div>
+      <div class="form-group">
+        <label for="province">Province : </label>
+        <input required class="form-control" required type="text" name="province" placeholder="Province" />
+      </div>
+    
+      <div class="form-group">
+        <label for="dob">Date of birth: </label>
+        <input required class="form-control" type="date" name="dob" placeholder="Date of birth" />
+      </div>
+      <div class="form-group">
+        <label for="email">Email : </label>
+        <input required class="form-control" type="text" name="email" placeholder="Email" />
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone: </label>
+        <input required class="form-control" type="text" name="phone" length="10" placeholder="Phone" />
+      </div>
+      <div class="form-group d-flex justify-content-around mt-3">
+        <button class="btn btn-primary" type="submit">Register</button>
+        <a class="btn btn-secondary" href="/user/login/">Back</a>
+      </div>
+    </form>
   </div>
-  <div>
-    <input type="text" name="email" placeholder="Email" />
-  </div>
-  <div>
-    <input type="text" name="phone" length="10" placeholder="Phone" />
-  </div>
-
-  <button type="submit">Register</button>
-</form>
+</div>

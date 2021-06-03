@@ -1,43 +1,103 @@
-<div>
-  <input type="text" value="{{order.person.fullName.firstName}}" readonly />
+{% extends '../layout.html' %} {% block content %}
+<div class="container">
+  <div class="row d-flex justify-content-center">
+    <div class="col-5">
+      <div>
+        <label>Họ</label>
+        <input
+          class="form-control"
+          type="text"
+          value="{{order.person.fullName.firstName}}"
+          readonly
+        />
+      </div>
+      <div>
+        <label>Tên đệm</label>
+        <input
+          class="form-control"
+          type="text"
+          value="{{order.person.fullName.middleName}}"
+          readonly
+        />
+      </div>
+      <div>
+        <label>Tên</label>
+        <input
+          class="form-control"
+          type="text"
+          value="{{order.person.fullName.lastName}}"
+          readonly
+        />
+      </div>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <td>Product</td>
+            <td>Quantity</td>
+            <td>Price</td>
+          </tr>
+        </thead>
+        <tbody>
+          {% for product in products %}
+          <tr>
+            <td>{{product.product.name}}</td>
+            <td>{{product.quantity}}</td>
+            <td>{{product.product.price}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <div>
+        <label>Tổng tiền</label>
+        <input
+          class="form-control"
+          name="total"
+          value="{{order.payment.amount}}"
+          readonly
+        />
+      </div>
+      <div>
+        <label for="">Xã</label>
+        <input
+          class="form-control"
+          value="{{order.person.address.wards}}"
+          readonly
+        />
+      </div>
+      <div>
+        <label for="">Quận/Huyện</label>
+        <input
+          class="form-control"
+          value="{{order.person.address.district}}"
+          readonly
+        />
+      </div>
+      <div>
+        <label for="">Tỉnh/Thành phố</label>
+        <input
+          class="form-control"
+          value="{{order.person.address.province}}"
+          readonly
+        />
+      </div>
+      <div>
+        <label for="">Phương thức thanh toán</label>
+        <input
+          class="form-control"
+          value="{{order.payment.paymentMethod}}"
+          readonly
+        />
+        <div>
+          <label for="">Trạng thái giao hàng</label>
+          <input
+            class="form-control"
+            value="{{order.shipping.get_shipStatus_display}}"
+            readonly
+          />
+        </div>
+        <a href="/employee/">Trang chủ</a>
+      </div>
+    </div>
+  </div>
+  {% endblock %}
 </div>
-<div>
-  <input type="text" value="{{order.person.fullName.middleName}}" readonly />
-</div>
-<div>
-  <input type="text" value="{{order.person.fullName.lastName}}" readonly />
-</div>
-<table>
-  <thead>
-    <tr>
-      <td>Product</td>
-      <td>Quantity</td>
-      <td>Price</td>
-    </tr>
-  </thead>
-  <tbody>
-    {% for product in products %}
-    <tr>
-      <td>{{product.product.name}}</td>
-      <td>{{product.quantity}}</td>
-      <td>{{product.product.price}}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-<div>
-  <input name="total" value="{{order.payment.amount}}" readonly />
-</div>
-<div>
-  <input value="{{order.person.address.wards}}" readonly />
-</div>
-<div>
-  <input value="{{order.person.address.district}}" readonly />
-</div>
-<div>
-  <input value="{{order.person.address.province}}" readonly />
-</div>
-<div>
-  <input value="{{order.shipping.get_shipStatus_display}}" readonly />
-</div>
-<a href="/employee/">Trang chủ</a>

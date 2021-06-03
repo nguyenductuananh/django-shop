@@ -1,0 +1,56 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'bootstrap.css' %}" />
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'bootstrap-grid.css' %}"
+/>
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+/>
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+/>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Untitle</a>
+  <div
+    class="collapse navbar-collapse justify-content-between"
+    style="flex: 1"
+    id="navbarSupportedContent"
+  >
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/employee/add-item/">Add a item</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/employee/orders/">View ordering list</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/employee/shipping-orders/"
+          >Shipping orders</a
+        >
+      </li>
+    </ul>
+    <div class="w-25">
+      {% if request.path == '/employee/' %}
+      <form class="d-flex form-inline my-2 my-lg-0">
+        <input
+          class="form-control mr-sm-2"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+          name="q"
+        />
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+          Search
+        </button>
+      </form>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+{% block content %}{% endblock %}

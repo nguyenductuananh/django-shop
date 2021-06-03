@@ -1,92 +1,121 @@
-<div>This is user's page</div>
-<div>
-  <input
-    value="{{person.fullName.firstName}}"
-    name="firstName"
-    placeholder="First Name"
-    readonly
-  />
-</div>
-<div>
-  <input
-    value="{{person.fullName.middleName}}"
-    name="middleName"
-    placeholder="Middle Name"
-    readonly
-  />
-</div>
-<div>
-  <input
-    value="{{person.fullName.lastName}}"
-    name="lastName"
-    placeholder="Last Name"
-    readonly
-  />
-</div>
-Account
-<div>
-  <input
-    value="{{person.account.username}}"
-    name="username"
-    placeholder="Username"
-    readonly
-  />
-</div>
-Address
-<div>
-  <input
-    type="text"
-    value="{{person.address.wards}}"
-    name="wards"
-    placeholder="Ward"
-    readonly
-  />
-</div>
-<div>
-  <input
-    type="text"
-    value="{{person.address.district}}"
-    name="district"
-    placeholder="District"
-    readonly
-  />
-</div>
-<div>
-  <input
-    type="text"
-    value="{{person.address.province}}"
-    name="province"
-    placeholder="Province"
-    readonly
-  />
-</div>
+{% extends '../layout.html' %} {% block content %}
+<div class="container">
+  <div class="row d-flex justify-content-center">
+    <div class="col-5">
+      <div>
+        <label>Họ</label>
+        <input
+          class="form-control"
+          value="{{person.fullName.firstName}}"
+          name="firstName"
+          placeholder="First Name"
+          readonly
+        />
+      </div>
+      <div>
+        <label>Tên đệm</label>
+        <input
+          class="form-control"
+          value="{{person.fullName.middleName}}"
+          name="middleName"
+          placeholder="Middle Name"
+          readonly
+        />
+      </div>
+      <div>
+        <label>Tên</label>
+        <input
+          class="form-control"
+          value="{{person.fullName.lastName}}"
+          name="lastName"
+          placeholder="Last Name"
+          readonly
+        />
+      </div>
 
-<div>
-  <input
-    type="date"
-    value="{{person.dob}}"
-    name="dob"
-    placeholder="Date of birth"
-    readonly
-  />
+      <div>
+        <label>Username</label>
+        <input
+          class="form-control"
+          value="{{person.account.username}}"
+          name="username"
+          placeholder="Username"
+          readonly
+        />
+      </div>
+      <div>
+        <label>Xã</label>
+        <input
+          class="form-control"
+          type="text"
+          value="{{person.address.wards}}"
+          name="wards"
+          placeholder="Ward"
+          readonly
+        />
+      </div>
+      <div>
+        <label>Quận/Huyện</label>
+        <input
+          class="form-control"
+          type="text"
+          value="{{person.address.district}}"
+          name="district"
+          placeholder="District"
+          readonly
+        />
+      </div>
+      <div>
+        <label>Tỉnh/Thành phố</label>
+        <input
+          class="form-control"
+          type="text"
+          value="{{person.address.province}}"
+          name="province"
+          placeholder="Province"
+          readonly
+        />
+      </div>
+
+      <div>
+        <label>Ngày sinh</label>
+        <input
+          class="form-control"
+          type="date"
+          value="{{person.dob}}"
+          name="dob"
+          placeholder="Date of birth"
+          readonly
+        />
+      </div>
+      <div>
+        <label>Email</label>
+        <input
+          class="form-control"
+          type="text"
+          value="{{person.email}}"
+          name="email"
+          placeholder="Email"
+          readonly
+        />
+      </div>
+      <div>
+        <label>Phone</label>
+        <input
+          class="form-control"
+          type="text"
+          value="{{person.phone}}"
+          name="phone"
+          length="10"
+          placeholder="Phone"
+          readonly
+        />
+      </div>
+      <div class="d-flex justify-content-around">
+        <a class="btn btn-primary mt-3" href="./update/">Update</a>
+        <a class="btn btn-secondary mt-3" href="/">Homepage</a>
+      </div>
+    </div>
+  </div>
 </div>
-<div>
-  <input
-    type="text"
-    value="{{person.email}}"
-    name="email"
-    placeholder="Email"
-    readonly
-  />
-</div>
-<div>
-  <input
-    type="text"
-    value="{{person.phone}}"
-    name="phone"
-    length="10"
-    placeholder="Phone"
-    readonly
-  />
-</div>
-<a href="./update/">Update</a>
+{% endblock %}

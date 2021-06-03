@@ -77,3 +77,9 @@ def create_order(request) :
             OrderLine.objects.create(product= product.product, unitPrice = product.product.price, quantity = product.quantity, order = order)
         products.delete()
         return redirect('/')
+def view_orders(request) : 
+    orders = Order.objects.filter(person_id = request.COOKIES['person_id'])
+    return render(request, 'order/view-order.html', {'orders' : orders})
+def remove_item(request, id) : 
+    SelectedProduct.objects.filter(id = id).delete()
+    return redirect('/cart')

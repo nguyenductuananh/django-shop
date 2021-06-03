@@ -1,41 +1,51 @@
 {% extends '../layout.html' %} {% block content %}
-<p>Name : {{product.name}}</p>
-<p>Price : {{product.price}}</p>
-
 <div class="container">
-  <form method="POST" action="/comment/{{product.id}}/?next={{request.path}}">
-    {% csrf_token %}
-    <div class="form-group">
-      <textarea
-        type="text"
-        placeholder="Comment..."
-        name="content"
-        class="form-control"
-      ></textarea>
-    </div>
-    <div class="form-group">
-      <input
-        type="number"
-        step="1"
-        value="1"
-        name="rate"
-        max="5"
-        min="1"
-        class="form-control"
-      />
-    </div>
-    <button type="submit">Send</button>
-  </form>
-</div>
-<div class="container">
-  <p>All comments</p>
   <div class="row">
-    {% for comment in comments %}
+    <p>Name : {{product.name}}</p>
+    <p>Price : {{product.price}}</p>
+    <a
+      class="btn btn-primary"
+      style="width: 150px"
+      href="/add-to-cart/{{product.id}}"
+      >Thêm vào giỏ</a
+    >
+  </div>
+</div>
+<hr />
+<div class="container">
+  <div class="row">
+    <form method="POST" action="/comment/{{product.id}}/?next={{request.path}}">
+      {% csrf_token %}
+      <div class="form-group w-50">
+        <textarea
+          type="text"
+          placeholder="Comment..."
+          name="content"
+          class="form-control"
+        ></textarea>
+        <input
+          type="number"
+          step="1"
+          value="1"
+          name="rate"
+          max="5"
+          min="1"
+          class="form-control w-25"
+        />
+      </div>
+      <button class="btn btn-primary" type="submit">Send</button>
+    </form>
+  </div>
+  <div class="container">
+    <p>All comments</p>
     <div class="row">
-      <div>{{comment.account.username}} - {{comment.created}}</div>
-      <div>{{comment.content}}</div>
+      {% for comment in comments %}
+      <div class="row">
+        <div><b>{{comment.account.username}}</b> - {{comment.created}}</div>
+        <div>{{comment.content}}</div>
+      </div>
+      {% endfor %}
     </div>
-    {% endfor %}
   </div>
 </div>
 {% endblock %}

@@ -1,4 +1,5 @@
-<table>
+{% extends '../layout.html' %} {% block content %}
+<table class="table table-hover">
   <tr>
     <th>ID</th>
     <th>Created</th>
@@ -13,8 +14,16 @@
     <td>{{order.date}}</td>
     <td>{{order.payment.amount}}</td>
     <td>{{order.shipping.get_shipStatus_display}}</td>
-    <td><a href="/employee/shipped/{{order.id}}">Change Status</a></td>
-    <td><a href="/employee/order/{{order.id}}">Detail</a></td>
+    <td>
+      <a class="btn btn-success" href="/employee/shipped/{{order.id}}"
+        >Change Status</a
+      >
+    </td>
+    <td>
+      <a class="btn btn-info" href="/employee/order/{{order.id}}">Detail</a>
+    </td>
   </tr>
   {% endfor %}
 </table>
+
+{% endblock %}

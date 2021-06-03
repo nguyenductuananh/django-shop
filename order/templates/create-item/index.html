@@ -1,27 +1,53 @@
-<form method="POST">
-  {% csrf_token %}
-  <div>
-    <input type="text" name="name" placeholder="Name" />
+{% extends '../layout.html' %} {% block content %}
+<div class="container">
+  <div class="row d-flex justify-content-center mt-3">
+    <div class="col-5">
+      <form method="POST">
+        {% csrf_token %}
+        <div>
+          <label for="">Tên sản phẩm</label>
+          <input
+            required
+            class="form-control"
+            type="text"
+            name="name"
+            placeholder="Name"
+          />
+        </div>
+        <div>
+          <label for="">Loại</label>
+          <select class="form-control" name="category">
+            {% for cate in categories %}
+            <option value="{{cate.id}}">{{cate.type}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div>
+          <label for="">Đơn giá</label>
+          <input
+            required
+            class="form-control"
+            type="number"
+            min="1000"
+            step="500"
+            name="price"
+            placeholder="Price"
+          />
+        </div>
+        <div>
+          <label>Mô tả</label>
+          <textarea
+            class="form-control"
+            name="description"
+            placeholder="Description..."
+          ></textarea>
+        </div>
+        <div class="d-flex justify-content-around mt-3">
+          <button class="btn btn-primary" type="submit">Create</button>
+          <a class="btn btn-light" href="../">Go back</a>
+        </div>
+      </form>
+    </div>
   </div>
-  <div>
-    <select name="category">
-      {% for cate in categories %}
-      <option value="{{cate.id}}">{{cate.type}}</option>
-      {% endfor %}
-    </select>
-  </div>
-  <div>
-    <input
-      type="number"
-      min="1000"
-      step="500"
-      name="price"
-      placeholder="Price"
-    />
-  </div>
-  <div>
-    <textarea name="description" placeholder="Description..."></textarea>
-  </div>
-  <button type="submit">Create</button>
-  <a href="../">Go back</a>
-</form>
+</div>
+{% endblock %}

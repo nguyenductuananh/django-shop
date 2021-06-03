@@ -1,50 +1,89 @@
-<form method="POST">
-  {% csrf_token %}
-  <div>
-    <input type="text" value="{{person.fullName.firstName}}" readonly />
+{% extends '../layout.html' %} {% block content %}
+<div class="container">
+  <div class="row d-flex justify-content-center">
+    <form class="w-50" method="POST">
+      {% csrf_token %}
+      <div class="form-group">
+        <label>First Name</label>
+        <input
+          class="form-control"
+          type="text"
+          value="{{person.fullName.firstName}}"
+          readonly
+        />
+      </div>
+      <div>
+        <label>Middle Name</label>
+        <input
+          class="form-control"
+          type="text"
+          value="{{person.fullName.middleName}}"
+          readonly
+        />
+      </div>
+      <div>
+        <label>Last Name</label>
+        <input
+          class="form-control"
+          type="text"
+          value="{{person.fullName.lastName}}"
+          readonly
+        />
+      </div>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <td>Product</td>
+            <td>Quantity</td>
+            <td>Price</td>
+          </tr>
+        </thead>
+        <tbody>
+          {% for product in products %}
+          <tr>
+            <td>{{product.product.name}}</td>
+            <td>{{product.quantity}}</td>
+            <td>{{product.product.price}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <div>
+        <label>Tổng</label>
+        <input class="form-control" name="total" value="{{total}}" readonly />
+      </div>
+      <div>
+        <label>Xã</label>
+        <input class="form-control" value="{{person.address.wards}}" readonly />
+      </div>
+      <div>
+        <label>Quận/Huyện</label>
+        <input
+          class="form-control"
+          value="{{person.address.district}}"
+          readonly
+        />
+      </div>
+      <div>
+        <label>Tỉnh/Thành phố</label>
+        <input
+          class="form-control"
+          value="{{person.address.province}}"
+          readonly
+        />
+      </div>
+      <div>
+        <label for="paymentmethod"> Phương thức thanh toán</label>
+        <select class="form-control" name="paymentmethod">
+          <option value="COD">COD</option>
+          <option value="BANK">BANK</option>
+        </select>
+      </div>
+      <div class="d-flex justify-content-around mt-3">
+        <button class="btn btn-success" type="submit">Submit</button>
+        <a class="btn btn-light" href="/">Trang chủ</a>
+      </div>
+    </form>
   </div>
-  <div>
-    <input type="text" value="{{person.fullName.middleName}}" readonly />
-  </div>
-  <div>
-    <input type="text" value="{{person.fullName.lastName}}" readonly />
-  </div>
-  <table>
-    <thead>
-      <tr>
-        <td>Product</td>
-        <td>Quantity</td>
-        <td>Price</td>
-      </tr>
-    </thead>
-    <tbody>
-      {% for product in products %}
-      <tr>
-        <td>{{product.product.name}}</td>
-        <td>{{product.quantity}}</td>
-        <td>{{product.product.price}}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  <div>
-    <input name="total" value="{{total}}" readonly />
-  </div>
-  <div>
-    <input value="{{person.address.wards}}" readonly />
-  </div>
-  <div>
-    <input value="{{person.address.district}}" readonly />
-  </div>
-  <div>
-    <input value="{{person.address.province}}" readonly />
-  </div>
-  <div>
-    <select name="paymentmethod">
-      <option value="COD">COD</option>
-      <option value="BANK">BANK</option>
-    </select>
-  </div>
-  <button type="submit">Submit</button>
-  <a href="/">Trang chủ</a>
-</form>
+</div>
+{% endblock %}
