@@ -1,0 +1,50 @@
+<form method="POST">
+  {% csrf_token %}
+  <div>
+    <input type="text" value="{{person.fullName.firstName}}" readonly />
+  </div>
+  <div>
+    <input type="text" value="{{person.fullName.middleName}}" readonly />
+  </div>
+  <div>
+    <input type="text" value="{{person.fullName.lastName}}" readonly />
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <td>Product</td>
+        <td>Quantity</td>
+        <td>Price</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in products %}
+      <tr>
+        <td>{{product.product.name}}</td>
+        <td>{{product.quantity}}</td>
+        <td>{{product.product.price}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div>
+    <input name="total" value="{{total}}" readonly />
+  </div>
+  <div>
+    <input value="{{person.address.wards}}" readonly />
+  </div>
+  <div>
+    <input value="{{person.address.district}}" readonly />
+  </div>
+  <div>
+    <input value="{{person.address.province}}" readonly />
+  </div>
+  <div>
+    <select name="paymentmethod">
+      <option value="COD">COD</option>
+      <option value="BANK">BANK</option>
+    </select>
+  </div>
+  <button type="submit">Submit</button>
+  <a href="/">Trang chủ</a>
+</form>

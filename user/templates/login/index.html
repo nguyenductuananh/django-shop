@@ -1,0 +1,17 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'login/styles.css' %}" />
+<h1>This is login page</h1>
+{% for message in messages %}
+<p>{{message}}</p>
+{% endfor %}
+<form action="./" method="POST">
+  {% csrf_token %}
+  <div>
+    <input type="text" name="username" placeholder="Username" />
+  </div>
+  <div>
+    <input type="password" name="password" placeholder="Password" />
+  </div>
+  <button type="submit">Login</button>
+  <a href="/user/register/">Register</a>
+</form>

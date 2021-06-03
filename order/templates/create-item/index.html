@@ -1,0 +1,27 @@
+<form method="POST">
+  {% csrf_token %}
+  <div>
+    <input type="text" name="name" placeholder="Name" />
+  </div>
+  <div>
+    <select name="category">
+      {% for cate in categories %}
+      <option value="{{cate.id}}">{{cate.type}}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div>
+    <input
+      type="number"
+      min="1000"
+      step="500"
+      name="price"
+      placeholder="Price"
+    />
+  </div>
+  <div>
+    <textarea name="description" placeholder="Description..."></textarea>
+  </div>
+  <button type="submit">Create</button>
+  <a href="../">Go back</a>
+</form>

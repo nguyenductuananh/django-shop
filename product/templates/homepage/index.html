@@ -1,0 +1,20 @@
+{% extends '../layout.html' %} {% block content %}
+<div class="container d-flex justify-center align-items-center">
+  <div class="row">
+    {% for item in items %}
+    <div class="card" style="width: 18rem">
+      <img src="..." class="card-img-top" alt="..." />
+      <div class="card-body">
+        <h5 class="card-title">
+          <a href="item/{{item.id}}/">{{item.name}}</a>
+        </h5>
+        <p class="card-text">{{item.description}}</p>
+        <a href="add-to-cart/{{item.id}}/" class="btn btn-primary"
+          >Thêm vào giỏ</a
+        >
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

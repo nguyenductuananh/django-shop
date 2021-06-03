@@ -1,0 +1,23 @@
+{% extends "../layout.html" %} {% block content %}
+<div class="container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Quantity</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in selectedProducts %}
+      <tr>
+        <td>{{item.product.name}}</td>
+        <td>{{item.product.price}}</td>
+        <td>{{item.quantity}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <a href="/create-order/">Thanh Toán</a>
+</div>
+{% endblock %}

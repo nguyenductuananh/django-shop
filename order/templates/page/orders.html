@@ -1,0 +1,20 @@
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Created</th>
+    <th>Amount</th>
+    <th>Status</th>
+    <th>Action</th>
+    <th>Action</th>
+  </tr>
+  {% for order in orders %}
+  <tr>
+    <td>{{order.id}}</td>
+    <td>{{order.date}}</td>
+    <td>{{order.payment.amount}}</td>
+    <td>{{order.shipping.get_shipStatus_display}}</td>
+    <td><a href="/employee/shipped/{{order.id}}">Change Status</a></td>
+    <td><a href="/employee/order/{{order.id}}">Detail</a></td>
+  </tr>
+  {% endfor %}
+</table>

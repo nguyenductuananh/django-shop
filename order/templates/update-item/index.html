@@ -1,0 +1,28 @@
+<form method="POST">
+  {% csrf_token %}
+  <div>
+    <input type="text" name="name" placeholder="Name" value="{{product.name}}" />
+  </div>
+  <div>
+    <select name="category">
+      {% for cate in categories %}
+      <option value="{{cate.id}}" {% if product.category.id == cate.id %} selected {% endif %}>{{cate.type}}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div>
+    <input
+      type="number"
+      min="1000"
+      step="500"
+      name="price"
+      placeholder="Price"
+      value={{product.price}}
+    />
+  </div>
+  <div>
+    <textarea name="description">{{product.description}}</textarea>
+  </div>
+  <button type="submit">Update</button>
+  <a href="../">Go back</a>
+</form>

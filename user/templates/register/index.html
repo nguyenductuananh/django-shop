@@ -1,0 +1,41 @@
+<form method="POST">
+  {% csrf_token %} Full Name
+  <div>
+    <input name="firstName" placeholder="Middle Name" />
+  </div>
+  <div>
+    <input name="middleName" placeholder="Middle Name" />
+  </div>
+  <div>
+    <input name="lastName" placeholder="Last Name" />
+  </div>
+  Account
+  <div>
+    <input name="username" placeholder="Username" />
+  </div>
+  <div>
+    <input type="password" name="password" placeholder="Password" />
+  </div>
+  Address
+  <div>
+    <input type="text" name="wards" placeholder="Ward" />
+  </div>
+  <div>
+    <input type="text" name="district" placeholder="District" />
+  </div>
+  <div>
+    <input type="text" name="province" placeholder="Province" />
+  </div>
+
+  <div>
+    <input type="date" name="dob" placeholder="Date of birth" />
+  </div>
+  <div>
+    <input type="text" name="email" placeholder="Email" />
+  </div>
+  <div>
+    <input type="text" name="phone" length="10" placeholder="Phone" />
+  </div>
+
+  <button type="submit">Register</button>
+</form>

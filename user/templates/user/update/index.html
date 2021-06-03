@@ -1,0 +1,88 @@
+{% extends '../../layout.html' %} {% block content %}
+<form method="POST" action="./">
+  {% csrf_token %}
+  <div>
+    <input
+      value="{{person.fullName.firstName}}"
+      name="firstName"
+      placeholder="First Name"
+    />
+  </div>
+  <div>
+    <input
+      value="{{person.fullName.middleName}}"
+      name="middleName"
+      placeholder="Middle Name"
+    />
+  </div>
+  <div>
+    <input
+      value="{{person.fullName.lastName}}"
+      name="lastName"
+      placeholder="Last Name"
+    />
+  </div>
+  Account
+  <div>
+    <input
+      value="{{person.account.username}}"
+      name="username"
+      placeholder="Username"
+      readonly
+    />
+  </div>
+  Address
+  <div>
+    <input
+      type="text"
+      value="{{person.address.wards}}"
+      name="wards"
+      placeholder="Ward"
+    />
+  </div>
+  <div>
+    <input
+      type="text"
+      value="{{person.address.district}}"
+      name="district"
+      placeholder="District"
+    />
+  </div>
+  <div>
+    <input
+      type="text"
+      value="{{person.address.province}}"
+      name="province"
+      placeholder="Province"
+    />
+  </div>
+
+  <div>
+    <input
+      type="date"
+      value="{{person.dob}}"
+      name="dob"
+      placeholder="Date of birth"
+    />
+  </div>
+  <div>
+    <input
+      type="text"
+      value="{{person.email}}"
+      name="email"
+      placeholder="Email"
+    />
+  </div>
+  <div>
+    <input
+      type="text"
+      value="{{person.phone}}"
+      name="phone"
+      length="10"
+      placeholder="Phone"
+    />
+  </div>
+  <button class="button button-primary">Update</button>
+  <a href="../">Cancel</a>
+</form>
+{% endblock %}

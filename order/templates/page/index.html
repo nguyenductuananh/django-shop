@@ -1,0 +1,25 @@
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+/>
+<a href="/employee/add-item/">Add a item</a>
+<a href="/employee/orders/">View ordering list</a>
+<a href="/employee/shipping-orders/">Shipping orders</a>
+
+<form>
+  <div>
+    <input type="text" name="q" placeholder="Search" />
+  </div>
+  <button><i class="fas fa-search"></i></button>
+</form>
+<div>
+  <ul>
+    {% for product in products %}
+    <li>
+      {{product.name}}<a href="./update-item/{{product.id}}/">Update</a
+      ><a href="./delete-item/{{product.id}}/">Delete</a>
+    </li>
+    {% endfor %}
+  </ul>
+</div>

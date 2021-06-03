@@ -1,0 +1,41 @@
+{% extends '../layout.html' %} {% block content %}
+<p>Name : {{product.name}}</p>
+<p>Price : {{product.price}}</p>
+
+<div class="container">
+  <form method="POST" action="/comment/{{product.id}}/?next={{request.path}}">
+    {% csrf_token %}
+    <div class="form-group">
+      <textarea
+        type="text"
+        placeholder="Comment..."
+        name="content"
+        class="form-control"
+      ></textarea>
+    </div>
+    <div class="form-group">
+      <input
+        type="number"
+        step="1"
+        value="1"
+        name="rate"
+        max="5"
+        min="1"
+        class="form-control"
+      />
+    </div>
+    <button type="submit">Send</button>
+  </form>
+</div>
+<div class="container">
+  <p>All comments</p>
+  <div class="row">
+    {% for comment in comments %}
+    <div class="row">
+      <div>{{comment.account.username}} - {{comment.created}}</div>
+      <div>{{comment.content}}</div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

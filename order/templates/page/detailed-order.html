@@ -1,0 +1,43 @@
+<div>
+  <input type="text" value="{{order.person.fullName.firstName}}" readonly />
+</div>
+<div>
+  <input type="text" value="{{order.person.fullName.middleName}}" readonly />
+</div>
+<div>
+  <input type="text" value="{{order.person.fullName.lastName}}" readonly />
+</div>
+<table>
+  <thead>
+    <tr>
+      <td>Product</td>
+      <td>Quantity</td>
+      <td>Price</td>
+    </tr>
+  </thead>
+  <tbody>
+    {% for product in products %}
+    <tr>
+      <td>{{product.product.name}}</td>
+      <td>{{product.quantity}}</td>
+      <td>{{product.product.price}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<div>
+  <input name="total" value="{{order.payment.amount}}" readonly />
+</div>
+<div>
+  <input value="{{order.person.address.wards}}" readonly />
+</div>
+<div>
+  <input value="{{order.person.address.district}}" readonly />
+</div>
+<div>
+  <input value="{{order.person.address.province}}" readonly />
+</div>
+<div>
+  <input value="{{order.shipping.get_shipStatus_display}}" readonly />
+</div>
+<a href="/employee/">Trang chủ</a>
