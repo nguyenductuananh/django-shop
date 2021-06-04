@@ -1,4 +1,4 @@
-from django.core.checks import messages
+from django.contrib import messages
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
 from .models import Product, Cart, Comment, Rate, SelectedProduct
@@ -8,9 +8,9 @@ from django.utils import timezone
 # Create your views here.
 def index(request) : 
     try : 
-        request.COOKIES['person_id']
+        person = Person.objects.get(id = request.COOKIES['person_id'])
         items = Product.objects.all()
-        return render(request, 'homepage/index.html', {"items" : items})
+        return render(request, 'homepage/index.html', {"items" : items, "person" : person})
     except :
         return redirect('/user/login/')
 def cart(request) :
@@ -20,7 +20,7 @@ def cart(request) :
     total = 0
     for p in selectedProducts : 
         total += p.product.price * p.quantity
-    return render(request, 'cart/index.html', {"selectedProducts" : selectedProducts, 'total' : total})
+    return render(request, 'cart/index.html', {"selectedProducts" : selectedProducts, 'total' : total, "person" : per})
 def add_to_cart(request, id) : 
     try : 
         per = Person.objects.get(id = request.COOKIES['person_id'])
@@ -31,7 +31,7 @@ def add_to_cart(request, id) :
     except : 
         sp = SelectedProduct.objects.create(cart = cart, product = selectedProduct, quantity = 1)
         sp.save()
-
+    messages.success(request, message='Mặt hàng đã được thêm vào giỏ')
     return redirect('/')
 
 def item(request, id) : 
@@ -55,7 +55,7 @@ def create_order(request) :
         cart = Cart.objects.get(account_id = person.account_id)
         products = SelectedProduct.objects.filter(cart_id = cart.id)
         if len(products) == 0  :
-            messages.Warning('Bạn cần chọn ít nhât một sản phẩm để thanh toán')
+            messages.warning(request, message='Bạn cần chọn ít nhât một sản phẩm để thanh toán')
             return redirect('/')
         total = 0
         for pro in products : 
@@ -76,10 +76,15 @@ def create_order(request) :
         for product in products : 
             OrderLine.objects.create(product= product.product, unitPrice = product.product.price, quantity = product.quantity, order = order)
         products.delete()
+        messages.success(request, message="Hóa đơn đã được nhận!")
         return redirect('/')
-def view_orders(request) : 
-    orders = Order.objects.filter(person_id = request.COOKIES['person_id'])
-    return render(request, 'order/view-order.html', {'orders' : orders})
+def view_orders(request) :
+    try : 
+        person = Person.objects.get(id = request.COOKIES['person_id'])
+        orders = Order.objects.filter(person_id = request.COOKIES['person_id'])
+        return render(request, 'order/view-order.html', {'orders' : orders, "person" : person})
+    except : 
+        return redirect('/user/login/')
 def remove_item(request, id) : 
     SelectedProduct.objects.filter(id = id).delete()
     return redirect('/cart')

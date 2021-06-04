@@ -1,4 +1,24 @@
 {% extends '../layout.html' %} {% block content %}
+<div class="container">
+  <div class="row d-flex justify-content-center">
+    <div class="col-5">
+      {% for message in messages %}
+      <div id="mess" style="height: 80px">
+        <div
+          class="alert alert-{{message.tags}} d-flex justify-content-between align-items-center"
+          role="alert"
+        >
+          {{message}}
+          <i
+            class="far fa-times-circle"
+            onclick="document.querySelector('#mess').style.display='none';"
+          ></i>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
 <div class="container d-flex justify-center align-items-center">
   <div class="row">
     {% for item in items %}

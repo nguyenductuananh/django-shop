@@ -19,7 +19,12 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <div class="d-flex justify-content-end" style="flex: 1">
-      <div class="d-flex justify-content-between mr-5" style="width: 100px; margin-right: 20px ;">
+      <div class="d-flex justify-content-between mr-5" style="width: 200px; margin-right: 20px ;">
+        {% if person.account.role %}
+        <a class = "mr-2" href="/employee/">
+          Employee Page
+        </a>
+        {% endif %} 
         <a class="mr-2" href="/user/">
           <i style="font-size: 20px" class="far fa-user"></i>
         </a>
