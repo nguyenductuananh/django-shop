@@ -1,14 +1,11 @@
 from django.db import models
 from enum import Enum
 # Create your models here.
-class ROLE(Enum) :
-    CUSTOMER = 0
-    MANAGER = 2
-    EMPLOYEE = 1
+
 class Account(models.Model) :
     username = models.CharField(max_length=20)
     password = models.CharField(max_length=200)
-    role = models.IntegerField(default=0)
+    role = models.IntegerField(default=0, choices =[(1, "Staff"), (2, "Business"), (3, "Sale"), (0, "Customer")])
 class FullName(models.Model) :
     firstName = models.CharField(max_length=200)
     middleName = models.CharField(max_length=200)

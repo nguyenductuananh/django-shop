@@ -1,9 +1,13 @@
 from django.db import models
+from django.contrib import admin
 from enum import Enum
 from user.models import Address, Account, Person
-from product.models import Product
+from product.models import Product, Supplier
 # Create your models here.
-
+class Feedback(models.Model) : 
+    person = models.ForeignKey(Person, on_delete=models.CASCADE)
+    content = models.TextField()
+    status = models.CharField(max_length=50)
 class Store(models.Model) : 
     name = models.CharField(max_length=200)
     description = models.TextField()
@@ -27,6 +31,9 @@ class Order(models.Model) :
     payment = models.ForeignKey(Payment, on_delete=models.CASCADE)  
     person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True)
     shipping = models.ForeignKey(Shipping, on_delete=models.CASCADE, null=True)
+    def __str__(self):
+        return 'Order ' + self.date.strftime("%d/%m/%y-%H:%M:%S")
+    
 class OrderLine(models.Model) :
     quantity = models.IntegerField()
     product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
@@ -53,9 +60,34 @@ class Warehouse(models.Model) :
     store = models.ForeignKey(Store, on_delete=models.CASCADE)
 class Notification(models.Model) : 
     description = models.TextField()
-    status = models.BooleanField() 
     store = models.ForeignKey(Store , on_delete=models.CASCADE) 
+# Bonus
 class NotificationAccount(models.Model) :
     account = models.ForeignKey(to = Account, on_delete=models.CASCADE )
     notification = models.ForeignKey(to = Notification, on_delete=models.CASCADE )
     isRead = models.BooleanField()
+class ImportedProduct(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
+    warehouse = models.ForeignKey(Warehouse, on_delete=models.CASCADE, null=True)
+    importPrice = models.IntegerField()
+    quantity = models.IntegerField()
+    date = models.DateTimeField( auto_now=False, auto_now_add=False)
+    class Meta:
+        verbose_name = ("ImportedProduct")
+        verbose_name_plural = ("ImportedProducts")
+
+    def get_absolute_url(self):
+        return reverse("ImportedProduct_detail", kwargs={"pk": self.pk})
+class ProductInStock(models.Model) :
+    warehouse = models.ForeignKey(Warehouse, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+    importPrice = models.IntegerField()
+class OrderNotification(models.Model) : 
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    description = models.TextField()
+class OrderNotificationAccount(models.Model) :
+    person = models.ForeignKey(Person, on_delete=models.CASCADE) 
+    isRead = models.BooleanField()
+    orderNotification = models.ForeignKey(OrderNotification, on_delete=models.CASCADE)

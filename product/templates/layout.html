@@ -1,42 +1,225 @@
 {% load static %}
-<link
-  rel="stylesheet"
-  type="text/css"
-  href="{% static 'style/bootstrap.css' %}"
-/>
-<link
-  rel="stylesheet"
-  type="text/css"
-  href="{% static 'style/bootstrap-grid.css' %}"
-/>
-<link
-  rel="stylesheet"
-  type="text/css"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-/>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" style="margin-left: 20px;" href="/">Untitle</a>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <div class="d-flex justify-content-end" style="flex: 1">
-      <div class="d-flex justify-content-between mr-5" style="width: 200px; margin-right: 20px ;">
-        {% if person.account.role %}
-        <a class = "mr-2" href="/employee/">
-          Employee Page
-        </a>
-        {% endif %} 
-        <a class="mr-2" href="/user/">
-          <i style="font-size: 20px" class="far fa-user"></i>
-        </a>
-        <a href="/cart/"
-          ><i style="font-size: 20px" class="fas fa-shopping-cart"></i
-          >{{cartSize}}</a
-        >
-        <a href="/orders/"
-          ><i style="font-size: 20px" class="fas fa-list-ul"></i>{{cartSize}}</a
-        >
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="/static/style/bootstrap.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/static/style/bootstrap-grid.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <style>
+      .noti:hover{
+        background-color : rgba(0, 0, 0, 0.2);
+      }
+    </style>
+  </head>
+  <body
+    class="vsc-initialized"
+    style="position: relative; width: 100%; min-height: 100vh"
+  >
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" style="margin-left: 20px" href="/">Untitle</a>
+      {% if request.path == '/' %}
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="./?type=">Tất cả</a>
+          </li>
+          {% for cate in categories %}
+          <li class="nav-item active">
+            <a class="nav-link" href="./?type={{cate.query}}">{{cate.type}}</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <form class="form-inline d-flex">
+        <input
+          class="form-control mr-sm-2"
+          type="search"
+          name="search"
+          placeholder="Tìm kiếm sản phẩm"
+          aria-label="Search"
+        />
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+          <i class="fas fa-search"></i>
+        </button>
+      </form>
+      {% endif %}
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="d-flex justify-content-end" style="flex: 1">
+          <div
+            class="d-flex justify-content-between mr-5"
+            style="width: 200px; margin-right: 20px"
+          >
+            {% if person.account.role > 0%}
+            <a class="mr-2" href="/employee/"> Emp </a>
+            {% endif %}
+            <a class="mr-2" href="/user/">
+              <i style="font-size: 20px" class="far fa-user"></i>
+            </a>
+            <button
+              style="
+                border: none;
+                outline: none;
+                background: none;
+                font-size: 18px;
+                position: relative;
+              "
+              onclick="(function show(){
+              document.querySelector('.modal-div').style.visibility = 'visible'
+            })()"
+            >
+              <i class="far fa-bell"></i
+              ><span
+                style="
+                  position: absolute;
+                  top: -50%;
+                  right: -40%;
+                  color: red;
+                  width: fit-content;
+                  height: fit-content;
+                "
+                class="badge badge-pill badge-primary"
+                >{{notificationsNum}}</span
+              >
+            </button>
+            <a href="/cart/"
+              ><i style="font-size: 20px" class="fas fa-shopping-cart"></i
+            ></a>
+            <a href="/orders/"
+              ><i style="font-size: 20px" class="fas fa-list-ul"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div
+      onclick="(function(){ document.querySelector('.modal-div').style.visibility = 'hidden';})()"
+      class="
+        modal-div
+        w-100
+        h-100
+        d-flex
+        justify-content-center
+        align-items-center
+      "
+      style="
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        visibility: hidden;
+      "
+    >
+      <div
+        class="modal-content w-50 h-50"
+        style="overflow-y: scroll"
+        onclick="(function(){ document.querySelectorAll('.modal-div')[0].style.visibility = 'hidden';})()"
+      ><div style="padding : 10px;  ">
+        {% if not notifications and not orderNotifications %}
+        <h1>Bạn không có thông báo mới!</h1>
+        {% endif %} {% if notifications %}
+        <ul style="list-style-type: none; padding: 5px; margin: 0">
+          {% for noti in notifications %}
+          <li class="noti" style="padding: 0px">
+            <a style="text-decoration : none;" href="/noti/{{noti.id}}"><div
+              style="
+                border: 1px solid gray;
+                border-radius: 5px;
+                padding-left: 8px;
+                margin-block-end: 5px;
+                text-decoration : none;
+              "
+            >
+              <p style="text-decoration : none"><b>{{noti.notification.store.name}}</b></p>
+              <p style="margin-block-end: 0; text-decoration : none;">
+                {{noti.notification.description}}
+              </p>
+            </div></a>
+          </li>
+          {% endfor %}
+        </ul>
+        {% endif %} {% if orderNotifications %}
+        <ul style="list-style-type: none; padding: 5px; margin: 0">
+          {% for noti in orderNotifications %}
+          <li class="noti" style="padding: 0px">
+            <a class="noti" style="text-decoration : none;" href="/onoti/{{noti.id}}"> <div
+              style="
+                border: 1px solid gray;
+                border-radius: 5px;
+                padding-left: 8px;
+                margin-block-end: 5px;
+                color : black;
+                text-decoration : none;
+              "
+            >
+              <p>
+                <b>Cập nhật đơn hàng {{noti.orderNotification.order}}</b>
+              </p>
+              <p style="margin-block-end: 0">
+                {{noti.orderNotification.description}}
+              </p>
+            </div></a>
+          </li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+        </div>
       </div>
     </div>
-  </div>
-</nav>
-{% block content %}{% endblock %}
+    <div style="position: absolute; right: 20px; bottom: 20px; font-size: 30px">
+      <button style='background-color : transparent; outline : none; border :none;' onclick="(function(){ document.querySelectorAll('.modal-div')[1].style.visibility = 'visible';})()">
+        <div style="border-radius: 4px; box-shadow : 0px 0px 10px 0px rgba(0, 0, 0, 0.2); height :60px; width : 60px; background-image : url('https://cdn.custom-cursor.com/packs/3263/among-us-red-dead-body-and-report-pack.png'); background-size : cover; background-position : -4px 0px; transform : scale(0.8)"/></div>
+      </button>
+    </div>
+    <div
+      onclick="(function(){ if(event.target.tagName == 'DIV') document.querySelectorAll('.modal-div')[1].style.visibility = 'hidden'; })(event)"
+      class="
+        modal-div
+        w-100
+        h-100
+        d-flex
+        justify-content-center
+        align-items-center
+      "
+      style="
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        visibility: hidden;
+      "
+    >
+    <div
+        class="modal-content w-25"
+      ><div class="container">
+        <div class="row d-flex justify-content-center align-items-center">
+          <div>
+            <form method="POST">
+              <div class="form-group mt-2">
+                <label>Mô tả về lỗi phản ánh : </label>
+                <textarea
+                  row="20"
+                  style="height: 200px"
+                  class="form-control mt-2"
+                  name="feedback-content"
+                  placeholder="Nhập nội dung phản ánh..."
+                ></textarea>
+              </div>
+              <button class="btn btn-primary mt-4" type="submit">Gửi phản ánh</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    {% block content %}{% endblock %}
+  </body>
+</html>

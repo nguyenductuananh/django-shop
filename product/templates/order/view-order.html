@@ -7,6 +7,7 @@
      <th>Created</th>
      <th>Amount</th>
      <th>Status</td>
+     <th>Action</td>
    </tr>
    {% for order in orders %}
    <tr>
@@ -15,6 +16,7 @@
      <td>{{order.date}}</td>
      <td>{{order.payment.amount}}</td>
      <td>{{order.shipping.get_shipStatus_display}}</td>
+     <td><a class='btn btn-success' href='/order/{{order.id}}'>Detail</a></td>
    </tr>
    {% endfor %}
 </table>

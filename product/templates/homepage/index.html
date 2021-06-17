@@ -30,12 +30,20 @@
       />
       <div class="card-body">
         <h5 class="card-title">
-          <a href="item/{{item.id}}/">{{item.name}}</a>
+          <a href="item/{{item.product.id}}/">{{item.product.name}}</a>
         </h5>
-        <p class="card-text">{{item.description}}</p>
-        <a href="add-to-cart/{{item.id}}/" class="btn btn-primary"
+        <p>( Giá : {{item.product.price}} - Số lượng : {{item.quantity}})</p>
+        <p class="card-text">{{item.product.description}}</p>
+        {% if item.quantity > 0 %}
+        <a href="add-to-cart/{{item.product.id}}/" class="btn btn-primary"
           >Thêm vào giỏ</a
         >
+        <a href="buy-now/{{item.product.id}}/" class="btn btn-primary"
+          >Mua ngay</a
+        >
+        {% endif %} {% if item.quantity == 0 %}
+        <p class="btn btn-light">Hết hàng</p>
+        {% endif %}
       </div>
     </div>
     {% endfor %}

@@ -2,6 +2,7 @@ from django.db import models
 from user.models import Account, Person
 # Create your models here.
 class Category(models.Model) : 
+    query = models.CharField(max_length=50)
     type = models.CharField(max_length=200)
 class Product(models.Model) : 
     name = models.CharField(max_length=200)

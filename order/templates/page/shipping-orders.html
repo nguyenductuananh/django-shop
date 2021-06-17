@@ -1,0 +1,31 @@
+{% extends '../employee-layout.html' %} {% block content %}
+<table class="table table-hover">
+  <tr>
+    <th>ID</th>
+    <th>Created</th>
+    <th>Amount</th>
+    <th>Status</th>
+    <th>Action</th>
+    <th>Action</th>
+  </tr>
+  {% for order in orders %}
+  <tr>
+    <td>{{order.id}}</td>
+    <td>{{order.date}}</td>
+    <td>{{order.payment.amount}}</td>
+    <td>{{order.shipping.get_shipStatus_display}}</td>
+    <td>
+      <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" value="{{order.id}}" name="orderId" />
+        <button type="submit" class="btn btn-success">Change Status</button>
+      </form>
+    </td>
+    <td>
+      <a class="btn btn-info" href="/employee/order/{{order.id}}">Detail</a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% endblock %}

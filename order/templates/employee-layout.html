@@ -23,17 +23,25 @@
     id="navbarSupportedContent"
   >
     <ul class="navbar-nav">
+      {% if person.account.role == 1 %}
       <li class="nav-item">
         <a class="nav-link" href="/employee/add-item/">Add a item</a>
       </li>
+      {% endif %} {% if person.account.role == 3 %}
       <li class="nav-item">
         <a class="nav-link" href="/employee/orders/">View ordering list</a>
       </li>
+      {% endif %} {% if person.account.role == 3 %}
       <li class="nav-item">
         <a class="nav-link" href="/employee/shipping-orders/"
           >Shipping orders</a
         >
       </li>
+      {% endif %} {% if person.account.role == 2 %}
+      <li class="nav-item">
+        <a class="nav-link" href="/employee/import-item/">Import item</a>
+      </li>
+      {% endif %}
     </ul>
     <div class="w-25">
       {% if request.path == '/employee/' %}

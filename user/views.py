@@ -63,13 +63,12 @@ def user_index(request) :
     except : 
         return redirect('/user/login/')
 def update_user(request) :
-    # try :
+    try :
         if request.method == "GET" :
             u = Person.objects.get(id = request.COOKIES['person_id'])
             u.dob = u.dob.strftime('%Y-%m-%d')
             return render(request, 'user/update/index.html', {"person" : u})
         if request.method == "POST" :
-            username = request.POST.get('username')
             firstName = request.POST.get('firstName')
             middleName = request.POST.get('middleName')
             lastName = request.POST.get('lastName')
@@ -84,5 +83,5 @@ def update_user(request) :
             FullName.objects.filter(id = person[0].fullName.id).update(middleName = middleName, firstName = firstName, lastName = lastName)
             Address.objects.filter(id = person[0].address.id).update(wards = wards, province = province,district = district)
             return redirect('../')
-    # except : 
-    #     return redirect('/user/logout/')
+    except : 
+        return redirect('/user/logout/')

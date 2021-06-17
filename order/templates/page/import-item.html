@@ -1,0 +1,73 @@
+{% extends '../employee-layout.html' %} {% block content %}
+<div class="container">
+  <div class="row d-flex justify-content-center mt-3">
+    <div class="col-5">
+      <form method="POST">
+        {% csrf_token %}
+        <div>
+          <label for="">Sản phẩm : </label>
+          <select
+            class="form-control"
+            name="product"
+            onchange="(() => {
+              value = event.target.selectedOptions[0].value
+              if(value === `notExist`) window.location.href = '../add-item/?next={{request.path}}';
+              else return;  
+            })(event)"
+          >
+            {% for product in products %}
+            <option value="{{product.id}}">{{product.name}}</option>
+            {% endfor %}
+            <option value="notExist">Add Product</option>
+          </select>
+        </div>
+        <div>
+          <label for="">Nhà cung cấp: </label>
+          <select class="form-control" name="supplier">
+            {% for supplier in suppliers %}
+            <option value="{{supplier.id}}">{{supplier.name}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div>
+          <label for="">Đơn giá</label>
+          <input
+            required
+            class="form-control"
+            type="number"
+            min="1000"
+            step="500"
+            name="price"
+            placeholder="Price"
+          />
+        </div>
+        <div>
+          <label for="">Số lượng</label>
+          <input
+            required
+            class="form-control"
+            type="number"
+            min="1"
+            value="1"
+            step="1"
+            name="quantity"
+            placeholder="Quantity"
+          />
+        </div>
+        <div>
+          <label for="">Kho - Cửa hàng</label>
+          <select class="form-control" name="warehouse">
+            {% for wh in warehouses %}
+            <option value="{{wh.id}}">{{wh.name}} - {{wh.store.name}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="d-flex justify-content-around mt-3">
+          <button class="btn btn-primary" type="submit">Create</button>
+          <a class="btn btn-light" href="../">Go back</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

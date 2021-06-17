@@ -1,0 +1,77 @@
+{% extends '../layout.html' %} {% block content %}
+<div class="container">
+  <div class="row d-flex justify-content-center">
+    <div class="col-5">
+      <div>
+        <label>Họ tên</label>
+        <input
+          class="form-control"
+          type="text"
+          value="{{person.fullName.firstName}} {{person.fullName.middleName}} {{person.fullName.lastName}}"
+          readonly
+        />
+      </div>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <td>Product</td>
+            <td>Quantity</td>
+            <td>Price</td>
+          </tr>
+        </thead>
+        <tbody>
+          {% for orderLine in orderLines %}
+          <tr>
+            <td>{{orderLine.product.name}}</td>
+            <td>{{orderLine.quantity}}</td>
+            <td>{{orderLine.product.price}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <div>
+        <label>Tổng tiền</label>
+        <input
+          class="form-control"
+          name="total"
+          value="{{order.payment.amount}}"
+          readonly
+        />
+      </div>
+      <div>
+        <label for="">Địa chỉ giao hàng</label>
+        <input
+          class="form-control"
+          value="Xã {{person.address.wards}} - Quận(Huyện) {{person.address.district}} - Tỉnh(TP) {{person.address.province}}"
+          readonly
+        />
+      </div>
+      <div>
+        <label for="">Phương thức thanh toán</label>
+        <input
+          class="form-control"
+          value="{{order.payment.paymentMethod}}"
+          readonly
+        />
+        <div>
+          <label for="">Trạng thái giao hàng</label>
+          <input
+            class="form-control"
+            value="{{order.shipping.get_shipStatus_display}}"
+            readonly
+          />
+        </div>
+
+        <div>
+          <label for="">Ngày đặt</label>
+          <input class="form-control" value="{{order.date}}" readonly />
+        </div>
+        <div class="d-flex justify-content-around mt-2">
+          <a class="btn btn-primary" href="/employee/">Trang chủ</a>
+          <a class="btn btn-light" href="/orders/">Quay lại</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock %}
+</div>
