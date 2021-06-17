@@ -18,14 +18,14 @@ class Payment(models.Model) :
     amount = models.FloatField()
     paymentMethod = models.CharField(max_length=200, choices=methodChoice)
 class Shipping(models.Model) : 
-    status  = [("SHIPPING" , "SHIPPING"),
-    ("DONE" , "DONE"),
-    ('PROCESSING' , "PROCESSING")]
+    status  = [(1 , "SHIPPING"),
+    (2, "DONE"),
+    (0 , "PROCESSING")]
     companyName = models.CharField(max_length=200)
     shipperName = models.CharField(max_length=200)
     shipperPhone = models.CharField(max_length=200)
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
-    shipStatus = models.CharField(max_length=200, choices=status, default="PROCESSING")
+    shipStatus = models.IntegerField(choices=status, default=0)
 class Order(models.Model) :
     date = models.DateTimeField()
     payment = models.ForeignKey(Payment, on_delete=models.CASCADE)  
@@ -91,3 +91,9 @@ class OrderNotificationAccount(models.Model) :
     person = models.ForeignKey(Person, on_delete=models.CASCADE) 
     isRead = models.BooleanField()
     orderNotification = models.ForeignKey(OrderNotification, on_delete=models.CASCADE)
+class OrderFeedback(models.Model) : 
+    isFeedback = models.BooleanField(default=False)
+    quality = models.IntegerField( choices=[(1, "Terrible"), (2, "Bad"), (3, "OK"), (4, "Good"), (5, "Awesome")])
+    action = models.IntegerField(choices=[(1, "Trả hàng"), (2, "Không")])
+    content = models.TextField()
+    order = models.ForeignKey(Order , on_delete=models.CASCADE, null=True)

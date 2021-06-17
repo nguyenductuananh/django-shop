@@ -80,7 +80,8 @@ def orders(request) :
             return redirect('/')
     except : 
         return redirect('/user/login/')
-    shipping = Shipping.objects.filter(shipStatus = "PROCESSING")
+    shipping = Shipping.objects.filter(shipStatus = 0)
+    print(Shipping.objects.filter(shipStatus = 0))
     orders = Order.objects.filter(shipping__in = shipping)
     return render(request, 'page/orders.html', {"orders" : orders})
 def detailed_order(request, id) :
@@ -103,13 +104,13 @@ def shipping_orders(request) :
                 return redirect('/')
         except : 
             return redirect('/user/login/')
-        shipping = Shipping.objects.filter(shipStatus = "SHIPPING")
+        shipping = Shipping.objects.filter(shipStatus = 1)
         orders = Order.objects.filter(shipping__in = shipping)
         return render(request, 'page/shipping-orders.html', {"orders" : orders})
     if request.method == "POST" : 
         orderId = request.POST.get('orderId')
         order = Order.objects.get(id = orderId)
-        Shipping.objects.filter(id = order.shipping.id).update(shipStatus = "DONE")
+        Shipping.objects.filter(id = order.shipping.id).update(shipStatus = 2)
         orderNoti = OrderNotification.objects.create(order_id = order.id, description="Đơn hàng đã được giao thành công!!")
         orderNoti.save()
         ona = OrderNotificationAccount.objects.create(person_id = order.person_id, orderNotification_id = orderNoti.id, isRead = False)
@@ -121,7 +122,7 @@ def shipped_change(request, id) :
             messages.warning(request, message="Đường dẫn không đúng hoặc không có quyền truy nhập")
             return redirect('/')
         order = Order.objects.get(id = id)
-        Shipping.objects.filter(id = order.shipping.id).update(shipStatus = "SHIPPING")
+        Shipping.objects.filter(id = order.shipping.id).update(shipStatus = 1)
         orderNoti = OrderNotification.objects.create(order_id = order.id, description="Đơn hàng của bạn đang được vận chuyển. Vui lòng đợi cho tới khi nhận được cuộc gọi của người giao hàng")
         orderNoti.save()
         ona = OrderNotificationAccount.objects.create(person_id = order.person_id, orderNotification_id = orderNoti.id, isRead = False)

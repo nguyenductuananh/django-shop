@@ -1,0 +1,38 @@
+{% extends '../layout.html' %} {% block content %}
+<div class="container">
+  <div class="row d-flex justify-content-center align-items-center">
+    <div class="col-5">
+      <form>
+        <h2>Bạn đang phản hồi cho Order</h1>
+        <div class="form-group mt-2">           
+          <label>ID : </label>
+          <input class='form-control' type='text' value="{{order.id}}" readonly>
+        </div>
+        <div class="form-group mt-2">           
+          <label>Ngày : </label>
+          <input class='form-control' type='text' value="{{order.date}}" readonly>
+        </div>
+        <div class="form-group mt-2">           
+          <label>Đánh giá chất lượng : </label>
+          <input value={{orderfeedback.get_quality_display}}>
+        </div>
+        <div class="form-group mt-2">           
+          <label>Yêu cầu : </label>
+          <input value={{orderfeedback.get_action_display}} />
+        </div>
+        <div class="form-group mt-2">            
+          <label>Mô tả về lỗi phản ánh : </label>
+          <textarea
+            row="20"
+            style="height: 200px"
+            class="form-control mt-2"
+            name="content"
+            placeholder="Nhập nội dung phản ánh..."
+          >{{orderfeedback.content}}</textarea>
+        </div>
+        <a class="btn btn-primary mt-4" href='/' type="submit">Trang chủ</a>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

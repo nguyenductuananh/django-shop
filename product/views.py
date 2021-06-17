@@ -3,7 +3,7 @@ from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
 from .models import Product, Cart, Comment, Rate, SelectedProduct, Category
 from user.models import  Person
-from order.models import Feedback, ProductInStock, Order, OrderLine, Payment, Shipping, NotificationAccount, OrderNotification, OrderNotificationAccount
+from order.models import OrderFeedback, Feedback, ProductInStock, Order, OrderLine, Payment, Shipping, NotificationAccount, OrderNotification, OrderNotificationAccount
 from django.utils import timezone
 # Create your views here.
 def index(request) : 
@@ -113,13 +113,17 @@ def view_orders(request) :
     except : 
         return redirect('/user/login/')
 def view_order(request, orderId) :
-    try : 
+    # try : 
         person = Person.objects.get(id = request.COOKIES['person_id'])
         order = Order.objects.get(person_id = request.COOKIES['person_id'], id = orderId)
+        of = OrderFeedback.objects.get(order_id = order.id)
         orderLines = OrderLine.objects.filter(order_id = order.id)
-        return render(request, 'order/detail-order.html', {'orderLines' : orderLines, 'order' : order, "person" : person})
-    except : 
-        return redirect('/user/login/')
+        if of.id : 
+            return render(request, 'order/detail-order.html', {'orderLines' : orderLines, 'order' : order, "person" : person, "ofid" : of.id})
+        else : 
+            return render(request, 'order/detail-order.html', {'orderLines' : orderLines, 'order' : order, "person" : person})
+    # except : 
+    #     return redirect('/user/login/')
 def remove_item(request, id) : 
     SelectedProduct.objects.filter(id = id).delete()
     return redirect('/cart')
@@ -163,5 +167,27 @@ def change_noti(request, id) :
     return redirect('/')
 def change_onoti(request, id) :
     person = Person.objects.get(id = request.COOKIES['person_id'])
-    OrderNotificationAccount.objects.filter(person_id = person.id, id = id).update(isRead = True)
-    return redirect('/')
+    # OrderNotificationAccount.objects.filter(person_id = person.id, id = id).update(isRead = True)
+    ona = OrderNotificationAccount.objects.get(person_id = person.id, id = id)
+    return redirect('/order/' + str(ona.orderNotification.order.id) + '/')
+def feedback_order(request, id) :
+    if request.method == "GET" : 
+        person = Person.objects.get(id = request.COOKIES['person_id'])
+        order = Order.objects.get(id = id)
+        of = OrderFeedback.objects.get(order_id = id) 
+        if of.id : 
+            messages.warning(request, message="Bạn đã phản hồi order này rồi.")
+            return redirect('/')
+        else : 
+            return render(request, 'order/feedback-order.html', {"order" : order})
+    if request.method == 'POST' : 
+        action = request.POST.get('action')
+        content = request.POST.get('content')
+        quality = request.POST.get('quality')
+        OrderFeedback.objects.create(order_id = id, action = int(action), quality = int(quality), content =content, isFeedback = True)
+        messages.success(request, message="Phản hồi của bạn đã được tiếp nhận. Cảm ơn.")
+        return redirect('/')
+def detail_feedback(request, id) :
+    person = Person.objects.get(id = request.COOKIES['person_id'])
+    of = OrderFeedback.objects.get(id = id)
+    return render(request, 'order/detail-feedback.html', {"order" : of.order, "orderfeedback" :of})
